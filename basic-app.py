@@ -39,29 +39,13 @@ def main():
 # http://localhost:8000/?sepal_length=4&sepal_width=3&petal_length=4&petal_width=5
 # Creating an Endpoint to receive the data
 # to make prediction on.
-# @app.get('/predict', response_model=response_Out)
-# async def predict(data : request_body):
-#     # Making the data in a form suitable for prediction
-#     print(data)
-#     test_data = [[
-#             data.sepal_length,
-#             data.sepal_width,
-#             data.petal_length,
-#             data.petal_width
-#     ]]
-#     print(test_data)
-     
-#     # Predicting the Class
-#     class_idx = clf.predict(test_data)[0]
-     
-#     # Return the Result
-#     decision = {
-#         "output": iris.target_names[class_idx],
-#     }
-#     return decision
-
 @app.get('/predict', response_model=response_Out)
 async def predict(sepal_length: float, sepal_width: float, petal_length: float, petal_width: float):
+    '''
+    Used to Classify Plant based on their features trained on iris dataset
+    - Example URL:
+    >>> http://localhost:8000/?sepal_length=4.3&sepal_width=3&petal_length=4&petal_width=5
+    '''
     # Making the data in a form suitable for prediction
     test_data = [[
             sepal_length,
@@ -69,8 +53,7 @@ async def predict(sepal_length: float, sepal_width: float, petal_length: float, 
             petal_length,
             petal_width
     ]]
-    print(test_data)
-     
+    print(test_data) 
     # Predicting the Class
     class_idx = clf.predict(test_data)[0]
      
