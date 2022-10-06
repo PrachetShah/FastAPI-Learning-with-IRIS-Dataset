@@ -1,7 +1,11 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 import uvicorn
 from sklearn.datasets import load_iris
+from sklearn.metrics import accuracy_score, confusion_matrix, recall_score, precision_score, f1_score
 from sklearn.naive_bayes import GaussianNB
+from sklearn.model_selection import train_test_split
+import numpy as np
+import pandas as pd
 from pydantic import BaseModel
  
 # Creating FastAPI instance
@@ -26,8 +30,11 @@ X = iris.data
 Y = iris.target
  
 # Creating and Fitting our Model
+X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=0)
+ 
+# Creating and Fitting our Model
 clf = GaussianNB()
-clf.fit(X,Y)
+clf.fit(X_train,y_train)
 
 
 # Defining path operation for root endpoint
@@ -64,5 +71,20 @@ async def predict(sepal_length: float, sepal_width: float, petal_length: float, 
     return decision
 
 clf.fit(X,Y)
+
+# Sending Accuracy Score of the Model
+@app.get("/modelScore")
+async def score():
+  y_pred = clf.predict(X_test)
+  return {"output": f"Accuracy of our Gaussian Model is: {accuracy_score(y_test, y_pred)*100}%"}
+
+# Sending Recall, Precision, and F1-Score of The Model
+@app.get("/statistics")
+async def stats():
+  y_pred = clf.predict(X_test)
+  recall = recall_score(y_test, y_pred, average='micro')
+  precision = precision_score(y_test, y_pred, average='micro')
+  f1Score = f1_score(y_test, y_pred, average='micro')
+  return {'output': f'Precision: {precision}    Recall: {recall}    F1 Score: {f1Score}'}
 
 # To run it, 'uvicorn basic-app:app --reload'
