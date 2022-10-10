@@ -1,0 +1,13 @@
+Accuracy of Model at 21:44:55 is 72.0
+Accuracy of Model at 22:06:08 is 72.0
+Accuracy of Model at 22:06:08 is 72.0
+Accuracy of Model at 22:06:08 is 72.0
+Accuracy of Model at 22:06:09 is 72.0
+Accuracy of Model at 22:06:21 is 72.0
+Accuracy of Model at 22:06:21 is 72.0
+Accuracy of Model at 22:06:23 is 72.0
+Accuracy of Model at 22:06:23 is 72.0
+Accuracy of Model at 22:18:04 is 72.0
+Accuracy of Model at 22:18:05 is 69.33333333333334
+Accuracy of Model at 22:18:37 is 70.0
+Accuracy of Model at 22:18:39 is 69.66666666666667
