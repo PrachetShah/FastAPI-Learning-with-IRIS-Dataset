@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 import uvicorn
 from sklearn.datasets import load_iris
 from sklearn.metrics import accuracy_score, confusion_matrix, recall_score, precision_score, f1_score
@@ -86,5 +86,10 @@ async def stats():
   precision = precision_score(y_test, y_pred, average='micro')
   f1Score = f1_score(y_test, y_pred, average='micro')
   return {'output': f'Precision: {precision}    Recall: {recall}    F1 Score: {f1Score}'}
+
+@app.post("/files")
+async def create_upload_file(file: UploadFile):
+    contents = await file.read()
+    return {'filename': file.filename, 'contents':contents}
 
 # To run it, 'uvicorn basic-app:app --reload'
